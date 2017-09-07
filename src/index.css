@@ -297,6 +297,10 @@ p {
     height: 100vh;
 } 
 
+.right-sidebar h5 {
+  text-align: center;
+}
+
 .conversation-users {
   padding: 10px 0;
   border-bottom: 1px solid lightgrey; 

@@ -48,6 +48,7 @@ class RightSidebar extends Component {
 
         return (
             <div className="col-sm-3 right-sidebar">
+                <h5>Members of this chat</h5>
                 <div className="conversation-users">
                     {arrayOfUsers}
                 </div>
