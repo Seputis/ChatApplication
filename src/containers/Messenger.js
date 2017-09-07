@@ -56,9 +56,6 @@ class Messenger extends Component {
 
 
     render() {
-    //         setTimeout(() => {
-    //   this.props.dispatch(changeCurrentConversation(this.props.currentConversationId))
-    // }, 1000)
 
         //Create array of messages and send them through  Message
         const arrayOfMessages = []
