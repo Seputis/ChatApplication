@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "HelveticaNeue-Thin", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font: 1em "Helvetica", sans-serif;
   font-weight: 300;
 }
 
@@ -71,7 +71,7 @@ body {
     top: 0px;
     bottom: 0px;
     border-right: 1px solid lightgrey; 
-    overflow: auto;
+    overflow: hidden;
 } 
 
 .main {
@@ -80,6 +80,7 @@ body {
     bottom: 0px;
     right: 0px;
     padding: 0;
+    height: 100vh;
 }
 
 .input-block {
@@ -99,7 +100,8 @@ body {
 .messenger {
   height: calc(100vh - 60px);
   padding: 10px 40px 0 10px;
-  overflow: auto;
+   overflow-y: scroll;
+  bottom: 0;
 }
 
 #message,
@@ -133,11 +135,13 @@ body {
     border-color: #29c9ff;
     border-radius: 50px;
     box-shadow: 0 3px 15px 0 rgba(0,0,0,.25);
+    padding: 10px;
     letter-spacing: 1px;
     color: white;
     transition: 0.2s;
     cursor: pointer;
     transition: 0.2s ease-in-out;
+    
 }
 
 .instead-of-img {
@@ -155,10 +159,24 @@ body {
   font-size: 16px;
 }
 
+.message-block-self {
+  justify-content: flex-end;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.message-content-self {
+  background: #29c9ff;
+  margin-top: auto;
+  border-radius: 10px;
+  padding: 3px 10px;
+}
+
 .message-block {
   display: flex;
   align-items: center;
-  margin: 20px 0;
   padding-left: 20px;
 }
 .message-block:first-child {
@@ -166,12 +184,13 @@ body {
 }
 
 .message {
+  max-width: 85%;
   padding: 10px 0;
   display: flex;
   flex-direction: column;
 }
 
-.message-author-and-time {
+.message-author {
   display: flex;
   flex-grow: 1;
   color: grey;
@@ -233,6 +252,10 @@ Sidebar stuff
   font-size: 12px;
 }
 
+.sidebar-message-container:last-child {
+  margin-bottom: 30px;
+}
+
 .sidebar-message-content span {
 float: left;
 width: 90%;
@@ -247,7 +270,7 @@ p {
 }
 
 .self > .instead-of-img,
-.self > .message > .message-author-and-time {
+.self > .message > .message-author {
   display: none;
 }
 
@@ -267,13 +290,254 @@ p {
 /* Right Sidebar */
 
  .right-sidebar {
+    display: flex;
+    flex-direction: column;
     padding: 10px 0;
     border-left: 1px solid lightgrey; 
-    overflow: auto;
+    height: 100vh;
 } 
 
 .conversation-users {
   padding: 10px 0;
   border-bottom: 1px solid lightgrey; 
   overflow: auto;
+  height: 100vh;
+}
+
+.information-about-me {
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#group-conversation {
+  transition:  0.2s ease-in-out;
+  cursor: pointer;
+  border: none;
+  width: 50px;
+  outline: none;
+}
+
+#group-conversation:hover {
+  background: darkgrey;
+}
+
+#group-conversation:focus {
+  outline: 0
+}
+
+#group-conversation:active {
+  outline: none;
+  border: none;
+}
+
+.filter-and-create-new-conversation {
+  overflow: initial;
+  position: fixed;
+  width: 25%;
+  top: 0;
+  height: 40px;
+  border-bottom: 1px solid lightgrey;  
+  display: flex;
+  justify-content: space-between;
+}
+
+.conversations {
+  top: 40px;
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  background: rgba(211,211,211,0.3);
+  border: 2px solid rgba(211,211,211,0.3);
+  border-radius: 5px;
+  box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+  padding: 0 30px;
+  margin: 10px 0 7px 30px;
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;;
+}
+
+.search .fa-search { 
+  position: absolute;
+  top: 12px;
+  left: 42px;
+}
+
+#search-filter:focus {
+  border: 2px solid #29c9ff;
+  outline-width: 0;
+}
+
+::-webkit-input-placeholder { text-align: center; }
+
+:-moz-placeholder { /* Firefox 18- */ text-align: center; }
+
+::-moz-placeholder {  /* Firefox 19+ */ text-align: center; }
+
+:-ms-input-placeholder { text-align: center; }
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
+
+.group-adding-process {
+  height: 40px;
+  background: lightblue;
+}
+
+#search-people-for-group {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding-left: 30px;
+  border: none;
+  border-bottom: 1px solid lightgrey; 
+}
+
+#search-people-for-group:focus {
+  outline: none;
+}
+
+
+.group-adding-process .fa-search { 
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+
+.container-for-filtering-list {
+  max-height: min-content;
+  width: 300px;
+  overflow: auto;
+  position: relative;
+  top: 10px;
+  border-radius: 20px;
+  left: 30px;
+  box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+  border: 2px solid rgba(211,211,211,0.3);
+}
+
+.container-for-filtered-list {
+  margin-right: 30px;
+  max-height: 300px;
+  width: 300px;
+  overflow: scroll;
+  position: relative;
+  top: 10px;
+  border-radius: 20px;
+  box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+  border: 2px solid rgba(211,211,211,0.3);
+}
+
+.filtered-user-container,
+.filtering-user-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.filtered-user-container:last-child,
+.filtering-user-container:last-child {
+  margin-bottom: 0;
+}
+
+.filtered-user-container:hover,
+.filtering-user-container:hover {
+  background: lightgray;
+  cursor: pointer;
+}
+
+.wrap-for-friends {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  height: 174px;
+}
+
+.create-group-button {
+  height: auto;
+  width: 100%;
+  margin-top: 40px;
+  text-align: center;
+}
+
+input[type="text"]::selection {
+  color: #29c9ff;
+}
+
+.error-box {
+  padding-top: 12px;
+  color: red;
+  width: 283px;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-wrap {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-show {
+  display: none;
+}
+
+.conversation-name {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.conversation-name input[type=text] {
+  border: 2px solid rgba(211,211,211,0.3);
+  padding-left: 5px;
+  border-radius: 5px;
+  background: rgba(211,211,211,0.3);
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;;
+}
+
+.conversation-name input[type=text]:focus {
+  border: 2px solid #29c9ff;
+  outline-width: 0;
+}
+
+.conversation-name input[type=text]:selection {
+  color: #29c9ff;
+}
+
+
+/* Trick for overscrolling. Not sure how it works on multiple browsers */
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    overflow: auto;
 }

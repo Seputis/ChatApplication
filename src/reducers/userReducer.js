@@ -4,7 +4,8 @@ const initialState = {
     userId: null,
     fetching: false,
     fetched: false,
-    error: null
+    error: null,
+    loginError: null
 }
 
 const userReducer = (state = initialState, action) => {
@@ -43,6 +44,9 @@ const userReducer = (state = initialState, action) => {
                     fetching: false,
                     users: action.payload
                     }
+        }
+        case 'LOGIN_ERROR': {
+            return {...state, loginError: true}
         }
         default:
             return state

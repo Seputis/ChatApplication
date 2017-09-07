@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { sendUserId } from '../actions/userActions'
+import { sendUserId, loginError } from '../actions/userActions'
 
 class AppLogin extends Component {
-
-    constructor(props) {
-        super(props);
-        this.handleLogin = this.handleLogin.bind(this);
-        this.handleError = this.handleError.bind(this);
-    }
 
     handleLogin(e) {
         e.preventDefault();
@@ -29,18 +22,24 @@ class AppLogin extends Component {
     }
 
     handleError() {
-        alert('Please provide any number from 1 to 5')
+        this.props.dispatch(loginError())
     }
 
     render(){
+
+        var errorDiv = <div className="error-box">
+                            <p>Please provide correct ID.</p>
+                      </div>
+
         return(
             <div className="start-wrap">
-                <form className="username-wrap" onSubmit={ this.handleLogin }>
-                    <div className="text">
+                <form className="username-wrap" onSubmit={ this.handleLogin.bind(this) }>
+                    <div className="text" id="text">
                         <h1>Chat for bunq</h1>
-                        <h6>Select your hypothetical ID from 1 to 5</h6>
+                        <h6>Select your ID from 1 to 5</h6>
                     </div>
-                    <input type="text" required placeholder="Enter your ID" />
+                    <input type="text" autocomplete="off" className={this.props.loginError ? "error-input" : null} required placeholder="Enter your ID" />
+                    {this.props.loginError ? errorDiv : null}
                     <input type="submit" value="Submit" />
                 </form>
             </div>
@@ -52,4 +51,10 @@ AppLogin.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default connect()(AppLogin)
+const mapStateToProps = state => {
+    return {
+        loginError: state.userReducer.loginError,
+    }
+}
+
+export default connect(mapStateToProps)(AppLogin)

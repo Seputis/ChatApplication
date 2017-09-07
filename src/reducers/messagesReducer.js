@@ -1,12 +1,9 @@
 const initialState = {
-    conversations: [],
+    allConversations: [],
+    visibleConversations: [],
     messages: [],
     currentConversation: {},
     users: [],
-    user: {
-        conversationId: null,
-        userId: null
-    },
     fetching: false,
     fetched: false,
     sending: false,
@@ -14,7 +11,8 @@ const initialState = {
     error: null,
     currentConversationId: null,
     message: null,
-    senderId: null
+    senderId: null,
+    usersArray: null
 }
 
 const messagesReducer = (state = initialState, action) => {
@@ -26,7 +24,8 @@ const messagesReducer = (state = initialState, action) => {
             return {...state,
                     fetching: false,
                     fetched: true,
-                    conversations: action.payload
+                    allConversations: action.payload,
+                    visibleConversations: action.payload
                     }
         }
         case 'SIDEBAR_CONVERSATIONS_INFORMATION_ERROR': {
@@ -65,6 +64,13 @@ const messagesReducer = (state = initialState, action) => {
                     sending: false,
                     error: action.payload
                     }
+        }
+        case 'CHANGE_CURRENT_CONVERSATIONS_BASED_ON_FILTER': {
+            return {...state,
+                    visibleConversations: action.payload}
+        }
+        case 'GET_LAST_SEEN_FOR_CONVERSATION': {
+            return {...state, usersArray: action.payload}
         }
         default:
             return state

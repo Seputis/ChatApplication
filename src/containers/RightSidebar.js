@@ -1,33 +1,43 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
 import ConversationUser from '../components/ConversationUser'
-import ExtraDetails from '../components/ExtraDetails'
-import { getUserData } from '../actions/userActions'
-import { getSidebarConversations, getCurrentConversationUsers } from '../actions/messagesActions'
-
 
 class RightSidebar extends Component {
-
-    componentDidUpdate() {
-    }  
 
     render() {
 
         const arrayOfUsers = []
-
+        
         for (var x in this.props.conversations) {
             var currConvId = this.props.conversations[x].conversation.conversationId
+
             if(currConvId == this.props.currentConversationId) {
                 var currentConversation = this.props.conversations[x]
+
                 for(var y in currentConversation) {
+
                     if(Array.isArray(currentConversation[y])) {
+
                         for(var c in currentConversation[y]) {
+
                             var userId = currentConversation[y][c].userid
                             userId = parseInt(userId.replace(/[^0-9\.]/g, ''), 10);
+                            var lastseen;
+
+                            for(let t in this.props.usersForLastSeen) {
+
+                                if(this.props.usersForLastSeen[t].id == userId) {
+                                    let user = this.props.usersForLastSeen[t]
+                                    lastseen = currentConversation[y][c].lastseen
+                                    
+                                    if(!lastseen){
+                                        lastseen = "No one knows"
+                                    }
+                                }
+                            }
                             arrayOfUsers.push(
                                 <div className="rightsidebar-message-container">
-                                    <ConversationUser userId={userId} props={this.props}/>
+                                    <ConversationUser lastseen={lastseen} userId={userId} props={this.props}/>
                                 </div>
                             )
                         }
@@ -41,7 +51,9 @@ class RightSidebar extends Component {
                 <div className="conversation-users">
                     {arrayOfUsers}
                 </div>
-                <ExtraDetails />
+                <div className="information-about-me">
+                    <h3>Aironas Seputis chat application</h3>
+                </div>
             </div>
         );
     }
@@ -51,8 +63,9 @@ const mapStateToProps = state => {
     return {
         users: state.userReducer.users,
         userId: state.userReducer.userId,
-        conversations: state.messagesReducer.conversations,
-        currentConversationId : state.messagesReducer.currentConversationId
+        conversations: state.messagesReducer.allConversations,
+        currentConversationId : state.messagesReducer.currentConversationId,
+        usersForLastSeen: state.messagesReducer.usersArray
     }
 }
 

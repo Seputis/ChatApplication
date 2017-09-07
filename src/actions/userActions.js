@@ -31,3 +31,9 @@ export function getUsers() {
         })
     })
 }
+
+export function loginError() {
+    return((dispatch) => {
+        dispatch({ type: 'LOGIN_ERROR' })
+    })
+}
